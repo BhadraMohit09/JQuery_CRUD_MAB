@@ -1,1 +1,1 @@
-<p>JQuery <sup>Static</sup> CRUD MVC.</p>:tada:
+<p>JQuery <sup>Static</sup> CRUD MVC:tada:.</p>
