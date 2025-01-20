@@ -1,1 +1,1 @@
-<sup>JQuery Static CRUD MVC.</sup>
+<p>JQuery <sup>Static</sup> CRUD MVC.</p>
