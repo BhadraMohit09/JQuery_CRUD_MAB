@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Product Management";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Product Management</h1>
+
+        <table class="table table-bordered" id="productTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h3>Add/Update Product</h3>
+        <form id="productForm">
+            <div class="mb-3">
+                <label for="productId" class="form-label">ID</label>
+                <input type="text" class="form-control" id="productId" placeholder="Enter product ID" required>
+            </div>
+            <div class="mb-3">
+                <label for="productName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+            </div>
+            <div class="mb-3">
+                <label for="productCategory" class="form-label">Category</label>
+                <input type="text" class="form-control" id="productCategory" placeholder="Enter product category" required>
+            </div>
+            <div class="mb-3">
+                <label for="productPrice" class="form-label">Price</label>
+                <input type="number" class="form-control" id="productPrice" placeholder="Enter product price" required>
+            </div>
+            <div class="mb-3">
+                <label for="productQuantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="productQuantity" placeholder="Enter product quantity" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#productForm").on("submit", function (e) {
+                e.preventDefault();
+
+                console.log("Form submitted!");
+
+                let id = $("#productId").val();
+                let name = $("#productName").val();
+                let category = $("#productCategory").val();
+                let price = $("#productPrice").val();
+                let quantity = $("#productQuantity").val();
+
+                let existingRow = $(`#productTable tbody tr[data-id="${id}"]`);
+
+                if (existingRow.length > 0) {
+                    existingRow.find(".product-name").text(name);
+                    existingRow.find(".product-category").text(category);
+                    existingRow.find(".product-price").text(price);
+                    existingRow.find(".product-quantity").text(quantity);
+                } else {
+                    let row = `
+                        <tr data-id="${id}">
+                            <td>${id}</td>
+                            <td class="product-name">${name}</td>
+                            <td class="product-category">${category}</td>
+                            <td class="product-price">${price}</td>
+                            <td class="product-quantity">${quantity}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm edit-btn">Edit</button>
+                                <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    $("#productTable tbody").append(row);
+                }
+
+                $("#productForm")[0].reset();
+            });
+
+            $(document).on("click", ".edit-btn", function () {
+                let row = $(this).closest("tr");
+
+                $("#productId").val(row.find("td:eq(0)").text());
+                $("#productName").val(row.find(".product-name").text());
+                $("#productCategory").val(row.find(".product-category").text());
+                $("#productPrice").val(row.find(".product-price").text());
+                $("#productQuantity").val(row.find(".product-quantity").text());
+            });
+
+            $(document).on("click", ".delete-btn", function () {
+                $(this).closest("tr").remove();
+            });
+        });
+    </script>
+
+</body>
+</html>
