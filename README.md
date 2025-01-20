@@ -1,1 +1,1 @@
-# CRUD_JQuery_MAB
+<p>JQuery Static CRUD MVC.</p>
